@@ -7,109 +7,22 @@
     </head>
     <body>
         <?php
+        // <editor-fold defaultstate="collapsed" desc="HEADER">
+
         ini_set('display_errors', 1);
         ini_set('display_startup_errors', 1);
         error_reporting(E_ALL);
-                
-        echo date('h:i:s') . " Executando processo...  <br>";
-        //sleep for 5 seconds
-        sleep(6);
-        //start again
-        echo date('h:i:s') . " Finalizando processo...  <br>";
-        
-        
 
-        /*
-        
-        function getAllDateCurrentMonth() {
-            $list = array();
-            for ($d = 1; $d <= 31; $d++) {
-                $time = mktime(12, 0, 0, date('m'), $d, date('Y'));
-                if (date('m', $time) == date('m'))
-                    $list[] = date('Y-m-d', $time) . " 10:00:00";
-            }
-            return $list;
-        }
+        include_once './util.php';
 
-        function formatListTimestamp($list) {
-            $listWorkTimestamp = array();
-            foreach ($list as $value) {                
-                if ($value <= date('Y-m-d 10:00:00')) {
-                    array_push($listWorkTimestamp, date_timestamp_get(date_create($value)));                    
-                }
-            }
-            return $listWorkTimestamp;
-        }
-        
-        /*
-        function getListWsDate($listWorkTimestamp) {
-            $wsDateList = array();
-            foreach ($listWorkTimestamp as $key => $value) {
-                array_push($wsDateList, date('Y-m-d\TH:i:s', $value));
-            }
-            return $wsDateList;
-        }
-         * 
-         */
-        
-        
-        /*
-        
-        
-        $list = getAllDateCurrentMonth();
-        $listWorkTimestamp = formatListTimestamp($list);  
-        //$wsDateList = getListWsDate($listWorkTimestamp);
-
-        var_dump($wsDateList);
-     
-
-
-
-
-
-        //$workTimestamp = time();
-
-        /*
-
-          $list[] = date('Y-M-D', $time);
-
-          var_dump($list);
-
-          /*
-
-
-          $workTimestamp = time();
-          //$workTimestamp2 = date_timestamp_get(date_create('2016-06-23 10:00:00'));
-
-          $workTimestamp2 = date_timestamp_get(date_create('2016-10-26 10:00:00'));
-
-
-          var_dump($workTimestamp);
-
-          var_dump($workTimestamp2);
-
-
-          if ($timestamp == null) {
-          $timestamp = time();
-          }
-
-          echo date('Y-m-d\TH:i:s', $workTimestamp);
-          echo '<br />';
-          echo date('Y-m-d\TH:i:s', $workTimestamp2);
-         * 
-         */
-
-
-
-        ////include_once './util.php';
+        // </editor-fold>
 
         /*
          * BEHAVIORAL
          */
 
-        /**
-         * OBSERVER PATTERN
-         */
+        // <editor-fold defaultstate="collapsed" desc="OBSERVER PATTERN">
+
         /*
           include_once './behavioral/observer/PatternSubject.php';
           include_once './behavioral/observer/PatternObserver.php';
@@ -130,15 +43,52 @@
          * 
          */
 
+        // </editor-fold>
+        // <editor-fold defaultstate="collapsed" desc="COMMAND PATTERN">
+
+        include_once './behavioral/command/BookCommandee.php';
+        include_once './behavioral/command/BookCommand.php';
+        include_once './behavioral/command/BookStarsOnCommand.php';
+        include_once './behavioral/command/BookStarsOffCommand.php';
+
+        util\util::writeln("BEGIN TESTING COMMAND PATERN");
+        util\util::writeln("");
+
+        $book = new BookCommandee("Design Patterns", "Gamma, Helm, Johnson, and Vlissides");
+        util\util::writeln("book after cration: ");
+        util\util::writeln($book->getAuthorAndTitle());
+        util\util::writeln("");
+
+        $starsOn = new BookStarsOnCommand($book);
+        callCommand($starsOn);
+        util\util::writeln("book after stars on: ");
+        util\util::writeln($book->getAuthorAndTitle());
+        util\util::writeln("");
+
+        $starsOff = new BookStarsOffCommand($book);
+        callCommand($starsOff);
+        util\util::writeln("boof after stars off: ");
+        util\util::writeln($book->getAuthorAndTitle());
+        util\util::writeln("");
+
+        util\util::writeln("END TESTING COMMAND PATTERN");
+
+        //the callCommand function demonstrates that a apecified 
+        //function in BokCommandee can be executed with only 
+        //an instance of BookCommand. 
+        function callCommand(BookCommand $bookCommand_in) {
+            $bookCommand_in->execute();
+        }
+
+        // </editor-fold>
+
         /*
          * STRUCTURAL
          */
 
-        /**
-         * DECORATOR PATTERN
-         */
-        /*
+        // <editor-fold defaultstate="collapsed" desc="DECORATOR PATTERN">
 
+        /*
           include_once './structural/decorator/Book.php';
           include_once './structural/decorator/BookTitleDecorator.php';
           include_once './structural/decorator/BookTitleStarDecorator.php';
@@ -173,6 +123,8 @@
           util\util::writeln($decorator->showTitle());
          * 
          */
+
+        // </editor-fold>
         ?>
     </body>
 </html>

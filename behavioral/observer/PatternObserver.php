@@ -2,7 +2,7 @@
 
 namespace behavioral\observer;
 
-include_once '.behavioral/observer/AbstractObserver.php';
+include_once './behavioral/observer/AbstractObserver.php';
 
 use util\util;
 
